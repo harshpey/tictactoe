@@ -1,27 +1,4 @@
-import React, { useState } from "react";
-
-const GameBoard = ({ onSelectPlayer, activePlayerSymbol }) => {
-  const initialBoard = [
-    [null, null, null],
-    [null, null, null],
-    [null, null, null],
-  ];
-
-  const [gameBoard, setGameBoard] = useState(initialBoard);
-
-  function handleSquare(rowIndex, colIndex) {
-    setGameBoard((prevGameBoard) => {
-      const updatedBoard = [
-        ...prevGameBoard.map((innerBoard) => [...innerBoard]),
-      ];
-      updatedBoard[rowIndex][colIndex] = activePlayerSymbol;
-      return updatedBoard;
-    });
-    onSelectPlayer();
-  }
-
- 
-
+const GameBoard = ({ onSelectPlayer, gameBoard }) => {
   return (
     <div id="game-board">
       {gameBoard.map((row, rowIndex) => (
@@ -29,7 +6,8 @@ const GameBoard = ({ onSelectPlayer, activePlayerSymbol }) => {
           {row.map((playerSymbol, colIndex) => (
             <button
               key={colIndex}
-              onClick={() => handleSquare(rowIndex, colIndex)}
+              onClick={() => onSelectPlayer(rowIndex, colIndex)}
+              disabled={gameBoard[rowIndex][colIndex] ? true : false}
             >
               {playerSymbol}
             </button>
